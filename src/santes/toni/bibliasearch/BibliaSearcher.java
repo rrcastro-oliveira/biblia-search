@@ -4,6 +4,8 @@ package santes.toni.bibliasearch;
 public class BibliaSearcher {
 	
 	private static BibliaSearcher instance = null;
+	private static Versao VERSAO_PADRAO = Versao.ACF;
+	
 	private BibliaSearcher(){}
 	
 	public static BibliaSearcher get() {
@@ -14,13 +16,32 @@ public class BibliaSearcher {
 		return instance;	
 	}
 	
+	public BibliaResults search(String params, Versao versao) {
+		return new BibliaResultsImpl(params, versao);
+	}
+	
 	public BibliaResults search(String params) {
-		return new BibliaResultsImpl(params);
+		return search(params, VERSAO_PADRAO);
+	}
+	
+	public BibliaResults get(Livro livro, Versao versao) {
+		return new BibliaResultsImpl("@" + livro.getStrs()[0], versao);
 	}
 	
 	public BibliaResults get(Livro livro) {
-		return new BibliaResultsImpl("@" + livro.getStrs()[0]);
+		return get(livro, VERSAO_PADRAO);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public static void main(String[] args) {
 		long l1 = System.currentTimeMillis();

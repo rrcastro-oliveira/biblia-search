@@ -1,15 +1,15 @@
 package santes.toni.bibliasearch;
 
-public class Parser {
+class Parser {
 
-	public static String parseParams(String params) {
+	public static String parseParams(String params, Versao versao) {
 		String[] split = params.trim().split("[ ,:,-]");
 		if (split.length == 0)
 			return null;
 		
 		if (split[0].startsWith("@")) {
 			split[0] = split[0].substring(1);
-			return parsePrint(split);
+			return parsePrint(split, versao);
 		}
 		else {
 			StringBuilder sqlBuilder = new StringBuilder(
@@ -23,13 +23,15 @@ public class Parser {
 				sqlBuilder.append(s);
 				sqlBuilder.append("%')");
 			}
-			sqlBuilder.append(" and (versao='acf') order by liv, cap, nver");
+			sqlBuilder.append(" and (versao='");
+			sqlBuilder.append(versao.getSrt());
+			sqlBuilder.append("') order by liv, cap, nver");
 			return sqlBuilder.toString();
 		}
 		
 	}
 
-	private static String parsePrint(String[] split) {
+	private static String parsePrint(String[] split, Versao versao) {
 		StringBuilder sqlBuilder = new StringBuilder(
 				"from biblia where (1=2)");
 
@@ -97,13 +99,15 @@ public class Parser {
 			sqlBuilder.append(vers2);
 			sqlBuilder.append("))");
 		}
+		sqlBuilder.append(" and (versao='");
+		sqlBuilder.append(versao.getSrt());
+		sqlBuilder.append("') order by liv, cap, nver");
 
-		sqlBuilder.append(" and (versao='acf') order by liv, cap, nver");
 		return sqlBuilder.toString();
 	}
 
 	public static void main(String[] args) {
-		System.out.println(Parser.parseParams("@gn @1 5"));
+		System.out.println(Parser.parseParams("gn 1 5", Versao.ACF));
 	}
 
 }
