@@ -1,27 +1,30 @@
 package santes.toni.bibliasearch;
 
 
-public class BibliaDao {
+public class BibliaSearcher {
 	
-	private static BibliaDao instance = null;
-	private BibliaDao(){}
+	private static BibliaSearcher instance = null;
+	private BibliaSearcher(){}
 	
-	public static BibliaDao get() {
+	public static BibliaSearcher get() {
 		if (instance == null) {
-			instance = new BibliaDao();
+			instance = new BibliaSearcher();
 		}
 		
 		return instance;	
 	}
 	
-	public BibliaResults pesquisar(String params) {
+	public BibliaResults search(String params) {
 		return new BibliaResultsImpl(params);
 	}
 	
+	public BibliaResults get(Livro livro) {
+		return new BibliaResultsImpl("@" + livro.getStrs()[0]);
+	}
 	
 	public static void main(String[] args) {
 		long l1 = System.currentTimeMillis();
-		BibliaResults results = BibliaDao.get().pesquisar("search \"Jesus chorou\"");
+		BibliaResults results = BibliaSearcher.get().get(Livro.GENESIS);
 		Versiculo v = results.next();
 		while (v != null) {
 			System.out.println(v.getTexto());

@@ -19,6 +19,10 @@ enum Livro {
 		return id;
 	}
 	
+	public String[] getStrs() {
+		return strs;
+	}
+	
 	public static Livro get(String str) {
 		for (Livro livro : values()) {
 			for (String s : livro.strs) {

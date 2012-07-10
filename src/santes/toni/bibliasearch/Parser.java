@@ -7,13 +7,14 @@ public class Parser {
 		if (split.length == 0)
 			return null;
 		
-		if (split[0].equals("print")) {
+		if (split[0].startsWith("@")) {
+			split[0] = split[0].substring(1);
 			return parsePrint(split);
 		}
-		else if (split[0].equals("search")) {
+		else {
 			StringBuilder sqlBuilder = new StringBuilder(
 					"from biblia where (1=2)");
-			int count = 1;
+			int count = 0;
 			while (count <= split.length) {
 				if (count >= split.length)
 					break;
@@ -25,7 +26,6 @@ public class Parser {
 			sqlBuilder.append(" and (versao='acf') order by liv, cap, nver");
 			return sqlBuilder.toString();
 		}
-		return null;
 		
 	}
 
@@ -33,7 +33,7 @@ public class Parser {
 		StringBuilder sqlBuilder = new StringBuilder(
 				"from biblia where (1=2)");
 
-		int count = 1;
+		int count = 0;
 		while (count <= split.length) {
 			if (count >= split.length)
 				break;
@@ -103,7 +103,7 @@ public class Parser {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(Parser.parseParams("gn 1 5"));
+		System.out.println(Parser.parseParams("@gn @1 5"));
 	}
 
 }
