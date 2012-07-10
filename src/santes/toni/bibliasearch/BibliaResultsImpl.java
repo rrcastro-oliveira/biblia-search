@@ -21,11 +21,6 @@ class BibliaResultsImpl implements BibliaResults
 		cursor = s.createQuery(sql).setReadOnly(true).setFetchSize(200).setCacheable(false).setFlushMode(FlushMode.COMMIT).scroll();
 	}
 	
-	public BibliaResultsImpl(Livro livro)
-	{
-		this()
-	}
-	
 	@Override
 	public void close()
 	{
