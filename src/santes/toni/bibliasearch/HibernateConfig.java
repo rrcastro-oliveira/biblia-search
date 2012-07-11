@@ -46,10 +46,11 @@ class HibernateConfig
 
 	private static Properties sqlProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.show_sql", "true");
+		properties.setProperty("hibernate.show_sql", "false");
 		properties.setProperty("hibernate.format_sql", "true");
 		properties.setProperty("hibernate.use_sql_comments", "true");
 		properties.setProperty("hibernate.query.substitutions", "yes 'Y', no 'N'");
+		properties.setProperty("javax.persistence.validation.mode", "none");
 		return properties;
 	}
 
