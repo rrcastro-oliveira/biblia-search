@@ -6,7 +6,9 @@ public enum Livro {
 	GENESIS(1, "gn", "gen", "genesis", "gênesis"),
 	EXODO(2, "ex", "exo", "exodo", "êxodo"),
 	LEVITICO(3, "lv", "lev", "levitico", "levítico"),
-	NUMEROS(4, "nm", "num", "numeros", "números");
+	NUMEROS(4, "nm", "num", "numeros", "números"),
+	DEUTERONOMIO(5, "dt", "deuteronomio", "deuteronômio"),
+	JOSUE(6, "js", "Jos", "josue", "josué");
 	
 	private final int id;
 	private final String[] strs;
