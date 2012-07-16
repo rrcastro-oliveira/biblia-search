@@ -17,6 +17,7 @@ public class BibliaSearcher {
 	}
 	
 	public BibliaResults search(String params, Versao versao) {
+		assert versao != null : "versão não pode ser nula";
 		return new BibliaResultsImpl(params, versao);
 	}
 	
@@ -24,14 +25,29 @@ public class BibliaSearcher {
 		return search(params, VERSAO_PADRAO);
 	}
 	
-	public BibliaResults get(Livro livro, Versao versao) {
-		return new BibliaResultsImpl("@" + livro.getStrs()[0], versao);
+	public BibliaResults getLivro(Livro livro, Versao versao) {
+		return search("@" + livro.getStrs()[0], versao);
 	}
 	
-	public BibliaResults get(Livro livro) {
-		return get(livro, VERSAO_PADRAO);
+	public BibliaResults getLivro(Livro livro) {
+		return getLivro(livro, VERSAO_PADRAO);
 	}
 	
+	public BibliaResults getCapitulo(Livro livro, int cap, Versao versao) {
+		return search("@" + livro.getStrs()[0] + " " + cap, versao);
+	}
+	
+	public BibliaResults getCapitulo(Livro livro, int cap) {
+		return getCapitulo(livro, cap, VERSAO_PADRAO);
+	}
+	
+	public BibliaResults getVersiculo(Livro livro, int cap, int nver, Versao versao) {
+		return search("@" + livro.getStrs()[0] + " " + cap + " " + nver, versao);
+	}
+	
+	public BibliaResults getVersiculo(Livro livro, int cap, int nver) {
+		return getVersiculo(livro, cap, nver, VERSAO_PADRAO);
+	}
 	
 	
 	
@@ -45,7 +61,7 @@ public class BibliaSearcher {
 	
 	public static void main(String[] args) {
 		long l1 = System.currentTimeMillis();
-		BibliaResults results = BibliaSearcher.get().get(Livro.GENESIS);
+		BibliaResults results = BibliaSearcher.get().getLivro(Livro.GENESIS);
 		Versiculo v = results.next();
 		while (v != null) {
 			System.out.println(v.getTexto());
