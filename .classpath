@@ -12,5 +12,7 @@
 	<classpathentry kind="lib" path="lib/jaybird-full-2.1.6.jar"/>
 	<classpathentry kind="lib" path="lib/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-3.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-analyzers-3.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

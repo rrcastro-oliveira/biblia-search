@@ -8,7 +8,7 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
 
-class HibernateConfig
+public class HibernateConfig
 {
 	private static Configuration configuration = null;
 	private static SessionFactory factory = null;
@@ -35,6 +35,7 @@ class HibernateConfig
 
 	private static void addMapping(Configuration ac) {
 		ac.addAnnotatedClass(Versiculo.class);
+		ac.addAnnotatedClass(santes.toni.bibliasearch.lucene.Livro.class);
 	}
 
 	private static void addProperties(Configuration ac) {
