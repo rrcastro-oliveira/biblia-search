@@ -24,7 +24,7 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 
 	public BibliaSearcherLucene() {
 		try {
-			index = new SimpleFSDirectory(new File("teste_index"));
+			index = new SimpleFSDirectory(new File(IndexadorBiblia.PASTA_INDEX));
 		} catch (IOException e) {
 			//FIXME Log
 			throw new BibliaSearcherException(e);

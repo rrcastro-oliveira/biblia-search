@@ -3,6 +3,7 @@ package santes.toni.bibliasearch.lucene;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.apache.lucene.analysis.br.BrazilianAnalyzer;
@@ -14,8 +15,10 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
 
-public class Indexador {
-
+public class IndexadorBiblia {
+	
+	public static final String PASTA_INDEX = ".bibliaindex";
+	
 	public static final String CONTENT = "content";
 	public static final String NVER = "nver";
 	public static final String CAP = "cap";
@@ -108,35 +111,43 @@ public class Indexador {
 	}	
 	
 	public static void main(String[] args) throws Exception {
+		File[] versoes = new File("versoes").listFiles();
+		indexarVersoes(versoes);
+	}
+
+	public static void indexarVersoes(File[] versoes) throws IOException {
 		BrazilianAnalyzer analyzer = new BrazilianAnalyzer(Version.LUCENE_36, BrazilianAnalyzer.getDefaultStopSet());
 
 	    // 1. create the index
-	    Directory index = new SimpleFSDirectory(new File("teste_index")); //new RAMDirectory();
+	    Directory index = new SimpleFSDirectory(new File(PASTA_INDEX)); //new RAMDirectory();
 
 	    IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
 
 	    IndexWriter w = new IndexWriter(index, config);
+	   
+	    for (File file : versoes) {
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		    System.out.println("indexando " + file.getName() + "...");
+	//	    int count = 0;
+			for (Livro l : Livro.values()) {
+			    for (int i=0; i<l.getCaps().length; i++) {
+			    	for (int v=0; v<l.getCaps()[i]; v++) {
+			    		Document doc = new Document();
+						doc.add(new Field(VERSAO, file.getName(), Field.Store.YES, Field.Index.ANALYZED));
+					    doc.add(new Field(LIVRO, l.getId()+"", Field.Store.YES, Field.Index.ANALYZED));
+				    	doc.add(new Field(CAP, (i+1)+"", Field.Store.YES, Field.Index.ANALYZED));
+			    		doc.add(new Field(NVER, (v+1)+"", Field.Store.YES, Field.Index.ANALYZED));
+			    		String line = reader.readLine();
+						doc.add(new Field(CONTENT, line, Field.Store.YES, Field.Index.ANALYZED));
+			    		w.addDocument(doc);
+	//		    		System.out.println("add " + count++);
+			    	}
+			    }
+			}
+			reader.close();
+	    }
 	    
-	    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("acf.txt"))));
-	    
-//	    int count = 0;
-		for (Livro l : Livro.values()) {
-		    for (int i=0; i<l.getCaps().length; i++) {
-		    	for (int v=0; v<l.getCaps()[i]; v++) {
-		    		Document doc = new Document();
-					doc.add(new Field(VERSAO, "acf", Field.Store.YES, Field.Index.ANALYZED));
-				    doc.add(new Field(LIVRO, l.getId()+"", Field.Store.YES, Field.Index.ANALYZED));
-			    	doc.add(new Field(CAP, (i+1)+"", Field.Store.YES, Field.Index.ANALYZED));
-		    		doc.add(new Field(NVER, (v+1)+"", Field.Store.YES, Field.Index.ANALYZED));
-		    		String line = reader.readLine();
-					doc.add(new Field(CONTENT, line, Field.Store.YES, Field.Index.ANALYZED));
-		    		w.addDocument(doc);
-//		    		System.out.println("add " + count++);
-		    	}
-		    }
-		}
-		
 		w.close();
-		reader.close();
+		System.out.println("versões indexadas com sucesso!");
 	}
 }

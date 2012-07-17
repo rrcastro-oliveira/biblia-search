@@ -15,7 +15,7 @@ import org.apache.lucene.util.Version;
 
 class SearchTeste {
 	public static void main(String[] args) throws Exception {
-		 Directory index = new SimpleFSDirectory(new File("teste_index"));
+		Directory index = new SimpleFSDirectory(new File(IndexadorBiblia.PASTA_INDEX));
 		
 		String s = "livro:1 AND content:diluvio"; 
 		BrazilianAnalyzer analyzer = new BrazilianAnalyzer(Version.LUCENE_36, BrazilianAnalyzer.getDefaultStopSet());
