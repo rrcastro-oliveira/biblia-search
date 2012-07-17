@@ -26,20 +26,25 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 		try {
 			index = new SimpleFSDirectory(new File(IndexadorBiblia.PASTA_INDEX));
 		} catch (IOException e) {
-			//FIXME Log
+			// FIXME Log
 			throw new BibliaSearcherException(e);
 		}
-		analyzer = new BrazilianAnalyzer(Version.LUCENE_36, BrazilianAnalyzer.getDefaultStopSet());
+		analyzer = new BrazilianAnalyzer(Version.LUCENE_36,
+				BrazilianAnalyzer.getDefaultStopSet());
 	}
-	
+
 	@Override
 	public BibliaResults search(String params, Versao versao) {
 		try {
-			String s = "versao:" + versao.getSrt() + " AND " + "content:" + params;
-			Query q = new QueryParser(Version.LUCENE_36, "",  analyzer).parse(s);
+			String s;
+			if (params.startsWith("@"))
+				s = Parser.parseParams(params.replaceFirst("@", ""), versao);
+			else
+				s = "versao:" + versao.getSrt() + " AND " + "content:" + params;
+			Query q = new QueryParser(Version.LUCENE_36, "", analyzer).parse(s);
 			return new BibliaResultsLucene(q, index);
 		} catch (Exception e) {
-			//FIXME log
+			// FIXME log
 			throw new BibliaSearcherException(e);
 		}
 	}
@@ -52,11 +57,12 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 	@Override
 	public BibliaResults getLivro(Livro livro, Versao versao) {
 		try {
-			String s = "versao:" + versao.getSrt() + " AND " + "livro:" + livro.getId();
-			Query q = new QueryParser(Version.LUCENE_36, "",  analyzer).parse(s);
+			String s = "versao:" + versao.getSrt() + " AND " + "livro:"
+					+ StringUtils.lpad(livro.getId() + "", "0", 3);
+			Query q = new QueryParser(Version.LUCENE_36, "", analyzer).parse(s);
 			return new BibliaResultsLucene(q, index);
 		} catch (Exception e) {
-			//FIXME log
+			// FIXME log
 			throw new BibliaSearcherException(e);
 		}
 	}
@@ -69,11 +75,13 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 	@Override
 	public BibliaResults getCapitulo(Livro livro, int cap, Versao versao) {
 		try {
-			String s = "versao:" + versao.getSrt() + " AND " + "livro:" + livro.getId() + " AND cap:" + cap;
-			Query q = new QueryParser(Version.LUCENE_36, "",  analyzer).parse(s);
+			String s = "versao:" + versao.getSrt() + " AND " + "livro:"
+					+ StringUtils.lpad(livro.getId() + "", "0", 3)
+					+ " AND cap:" + StringUtils.lpad(cap + "", "0", 3);
+			Query q = new QueryParser(Version.LUCENE_36, "", analyzer).parse(s);
 			return new BibliaResultsLucene(q, index);
 		} catch (Exception e) {
-			//FIXME log
+			// FIXME log
 			throw new BibliaSearcherException(e);
 		}
 	}
@@ -87,11 +95,14 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 	public BibliaResults getVersiculo(Livro livro, int cap, int nver,
 			Versao versao) {
 		try {
-			String s = "versao:" + versao.getSrt() + " AND " + "livro:" + livro.getId() + " AND cap:" + cap + " AND nver:" + nver;
-			Query q = new QueryParser(Version.LUCENE_36, "",  analyzer).parse(s);
+			String s = "versao:" + versao.getSrt() + " AND " + "livro:"
+					+ StringUtils.lpad(livro.getId() + "", "0", 3)
+					+ " AND cap:" + StringUtils.lpad(cap + "", "0", 3)
+					+ " AND nver:" + StringUtils.lpad(nver + "", "0", 3);
+			Query q = new QueryParser(Version.LUCENE_36, "", analyzer).parse(s);
 			return new BibliaResultsLucene(q, index);
 		} catch (Exception e) {
-			//FIXME log
+			// FIXME log
 			throw new BibliaSearcherException(e);
 		}
 	}

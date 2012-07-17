@@ -134,9 +134,9 @@ public class IndexadorBiblia {
 			    	for (int v=0; v<l.getCaps()[i]; v++) {
 			    		Document doc = new Document();
 						doc.add(new Field(VERSAO, file.getName(), Field.Store.YES, Field.Index.ANALYZED));
-					    doc.add(new Field(LIVRO, l.getId()+"", Field.Store.YES, Field.Index.ANALYZED));
-				    	doc.add(new Field(CAP, (i+1)+"", Field.Store.YES, Field.Index.ANALYZED));
-			    		doc.add(new Field(NVER, (v+1)+"", Field.Store.YES, Field.Index.ANALYZED));
+					    doc.add(new Field(LIVRO, StringUtils.lpad(l.getId()+"", "0", 3), Field.Store.YES, Field.Index.ANALYZED));
+				    	doc.add(new Field(CAP, StringUtils.lpad((i+1)+"", "0", 3), Field.Store.YES, Field.Index.ANALYZED));
+			    		doc.add(new Field(NVER, StringUtils.lpad((v+1)+"", "0", 3), Field.Store.YES, Field.Index.ANALYZED));
 			    		String line = reader.readLine();
 						doc.add(new Field(CONTENT, line, Field.Store.YES, Field.Index.ANALYZED));
 			    		w.addDocument(doc);

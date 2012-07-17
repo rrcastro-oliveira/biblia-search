@@ -4,23 +4,29 @@ import java.io.File;
 
 import org.apache.lucene.analysis.br.BrazilianAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
+import org.apache.lucene.util.NumericUtils;
 import org.apache.lucene.util.Version;
+
+import santes.toni.bibliasearch.Versao;
 
 class SearchTeste {
 	public static void main(String[] args) throws Exception {
 		Directory index = new SimpleFSDirectory(new File(IndexadorBiblia.PASTA_INDEX));
 		
-		String s = "livro:1 AND content:diluvio"; 
+		String s = "versao:acf AND ((livro:001 AND cap:001 AND nver:[001 TO 002]) OR (livro:043 AND cap:001))"; 
 		BrazilianAnalyzer analyzer = new BrazilianAnalyzer(Version.LUCENE_36, BrazilianAnalyzer.getDefaultStopSet());
+		Query q = new QueryParser(Version.LUCENE_36, "",  analyzer).parse(Parser.parseParams("gn 1 1-5 ex 1 2-3", Versao.ACF));
 		
-		Query q = new QueryParser(Version.LUCENE_36, "",  analyzer).parse(s);
+//		Query q = new TermQuery( new Term("livro", NumericUtils.intToPrefixCoded(1)).createTerm());
 		
 //		Query q = new MultiFieldQueryParser(Version.LUCENE_36, new String[]{"livro:1", "cap:1"}, analyzer).pa;
 //	    Query q =  new WildcardQuery(new Term("content", "verbo")); //new QueryParser(Version.LUCENE_36, "title", analyzer).parse(querystr);
