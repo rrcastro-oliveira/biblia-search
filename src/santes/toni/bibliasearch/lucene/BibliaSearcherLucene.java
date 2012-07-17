@@ -12,6 +12,7 @@ import org.apache.lucene.util.Version;
 
 import santes.toni.bibliasearch.BibliaResults;
 import santes.toni.bibliasearch.BibliaSearcher;
+import santes.toni.bibliasearch.BibliaSearcherException;
 import santes.toni.bibliasearch.Livro;
 import santes.toni.bibliasearch.Versao;
 
@@ -26,7 +27,7 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 			index = new SimpleFSDirectory(new File("teste_index"));
 		} catch (IOException e) {
 			//FIXME Log
-			e.printStackTrace();
+			throw new BibliaSearcherException(e);
 		}
 		analyzer = new BrazilianAnalyzer(Version.LUCENE_36, BrazilianAnalyzer.getDefaultStopSet());
 	}
@@ -39,9 +40,8 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 			return new BibliaResultsLucene(q, index);
 		} catch (Exception e) {
 			//FIXME log
-			e.printStackTrace();
+			throw new BibliaSearcherException(e);
 		}
-		return null;
 	}
 
 	@Override
@@ -57,9 +57,8 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 			return new BibliaResultsLucene(q, index);
 		} catch (Exception e) {
 			//FIXME log
-			e.printStackTrace();
+			throw new BibliaSearcherException(e);
 		}
-		return null;
 	}
 
 	@Override
@@ -75,9 +74,8 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 			return new BibliaResultsLucene(q, index);
 		} catch (Exception e) {
 			//FIXME log
-			e.printStackTrace();
+			throw new BibliaSearcherException(e);
 		}
-		return null;
 	}
 
 	@Override
@@ -94,9 +92,8 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 			return new BibliaResultsLucene(q, index);
 		} catch (Exception e) {
 			//FIXME log
-			e.printStackTrace();
+			throw new BibliaSearcherException(e);
 		}
-		return null;
 	}
 
 	@Override
