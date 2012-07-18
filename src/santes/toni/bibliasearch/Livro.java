@@ -9,7 +9,6 @@ public enum Livro {
 	NUMEROS(4, "nm", "num", "numeros", "números"),
 	DEUTERONOMIO(5, "dt", "deuteronomio", "deuteronômio"),
 	JOSUE(6, "js", "Jos", "josue", "josué"),
-	
 	JOAO(43, "jo", "joao", "joão");
 	
 	private final int id;

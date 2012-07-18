@@ -1,6 +1,5 @@
 package santes.toni.bibliasearch;
 
-
 public interface BibliaSearcher {
 	BibliaResults search(String params, Versao versao);
 	BibliaResults search(String params);
