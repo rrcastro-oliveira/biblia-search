@@ -6,7 +6,7 @@ import santes.toni.bibliasearch.Versao;
 class Parser {
 
 	public static String parseParams(String params, Versao versao) {
-		String[] split = params.trim().split("[\\s+,:,-]");
+		String[] split = params.trim().replaceAll("\\s+", ":").split("[-,:]");
 		if (split.length == 0)
 			return null;
 		
@@ -93,7 +93,7 @@ class Parser {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(Parser.parseParams("gn 1 5-8 jo 5 ex 2 4 lv 8 1 4", Versao.ACF));
+		System.out.println(Parser.parseParams("gn 1   5-8    jo   5 ex 2:4 lv 8 1 4", Versao.ACF));
 	}
  
 }

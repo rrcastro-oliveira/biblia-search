@@ -13,8 +13,10 @@ import org.apache.lucene.util.Version;
 import santes.toni.bibliasearch.BibliaResults;
 import santes.toni.bibliasearch.BibliaSearcher;
 import santes.toni.bibliasearch.BibliaSearcherException;
+import santes.toni.bibliasearch.BibliaSearcherFactory;
 import santes.toni.bibliasearch.Livro;
 import santes.toni.bibliasearch.Versao;
+import santes.toni.bibliasearch.Versiculo;
 
 public class BibliaSearcherLucene implements BibliaSearcher {
 
