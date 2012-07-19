@@ -15,16 +15,8 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
 
-public class IndexadorBiblia {
+public class IndexadorACF {
 	
-	public static final String PASTA_INDEX = ".bibliaindex";
-	
-	public static final String CONTENT = "content";
-	public static final String NVER = "nver";
-	public static final String CAP = "cap";
-	public static final String LIVRO = "livro";
-	public static final String VERSAO = "versao";
-
 	enum Livro {
 		GENESIS(1, new int[]{31,25,24,26,32,22,24,22,29,32,32,20,18,24,21,16,27,33,38,18,34,24,20,67,34,35,46,22,35,43,55,32,20,31,29,43,36,30,23,23,57,38,34,34,28,34,31,22,33,26}),
 		EXODO(2, new int[]{22,25,22,31,23,30,25,32,35,29,10,51,22,31,27,36,16,27,25,26,36,31,33,18,40,37,21,43,46,38,18,35,23,35,35,38,29,31,43,38}),
@@ -111,43 +103,41 @@ public class IndexadorBiblia {
 	}	
 	
 	public static void main(String[] args) throws Exception {
-		File[] versoes = new File("versoes").listFiles();
-		indexarVersoes(versoes);
+		indexar();
 	}
 
-	public static void indexarVersoes(File[] versoes) throws IOException {
+	public static void indexar() throws IOException {
 		BrazilianAnalyzer analyzer = new BrazilianAnalyzer(Version.LUCENE_36, BrazilianAnalyzer.getDefaultStopSet());
 
 	    // 1. create the index
-	    Directory index = new SimpleFSDirectory(new File(PASTA_INDEX)); //new RAMDirectory();
+	    Directory index = new SimpleFSDirectory(new File(Indexador.PASTA_INDEX)); //new RAMDirectory();
 
 	    IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
 
 	    IndexWriter w = new IndexWriter(index, config);
-	   
-	    for (File file : versoes) {
-		    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-		    System.out.println("indexando " + file.getName() + "...");
-	//	    int count = 0;
-			for (Livro l : Livro.values()) {
-			    for (int i=0; i<l.getCaps().length; i++) {
-			    	for (int v=0; v<l.getCaps()[i]; v++) {
-			    		Document doc = new Document();
-						doc.add(new Field(VERSAO, file.getName(), Field.Store.YES, Field.Index.ANALYZED));
-					    doc.add(new Field(LIVRO, StringUtils.lpad(l.getId()+"", "0", 3), Field.Store.YES, Field.Index.ANALYZED));
-				    	doc.add(new Field(CAP, StringUtils.lpad((i+1)+"", "0", 3), Field.Store.YES, Field.Index.ANALYZED));
-			    		doc.add(new Field(NVER, StringUtils.lpad((v+1)+"", "0", 3), Field.Store.YES, Field.Index.ANALYZED));
-			    		String line = reader.readLine();
-						doc.add(new Field(CONTENT, line, Field.Store.YES, Field.Index.ANALYZED));
-			    		w.addDocument(doc);
-	//		    		System.out.println("add " + count++);
-			    	}
-			    }
+	    File file = new File("versoes/acf");
+	    
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		System.out.println("indexando " + file.getName() + "...");
+		// int count = 0;
+		for (Livro l : Livro.values()) {
+			for (int i = 0; i < l.getCaps().length; i++) {
+				for (int v = 0; v < l.getCaps()[i]; v++) {
+					Document doc = new Document();
+					doc.add(new Field(Indexador.VERSAO, file.getName(), Field.Store.YES, Field.Index.ANALYZED));
+					doc.add(new Field(Indexador.LIVRO, StringUtils.lpad(l.getId() + "", "0", 3), Field.Store.YES, Field.Index.ANALYZED));
+					doc.add(new Field(Indexador.CAP, StringUtils.lpad((i + 1) + "", "0", 3), Field.Store.YES, Field.Index.ANALYZED));
+					doc.add(new Field(Indexador.NVER, StringUtils.lpad((v + 1) + "", "0", 3), Field.Store.YES, Field.Index.ANALYZED));
+					String line = reader.readLine();
+					doc.add(new Field(Indexador.CONTENT, line, Field.Store.YES, Field.Index.ANALYZED));
+					w.addDocument(doc);
+					// System.out.println("add " + count++);
+				}
 			}
-			reader.close();
-	    }
+		}
+		reader.close();
 	    
 		w.close();
-		System.out.println("versões indexadas com sucesso!");
+		System.out.println(file.getName() + " indexadas com sucesso!");
 	}
 }

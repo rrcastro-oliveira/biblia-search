@@ -17,7 +17,7 @@ import santes.toni.bibliasearch.Versao;
 
 class SearchTeste {
 	public static void main(String[] args) throws Exception {
-		Directory index = new SimpleFSDirectory(new File(IndexadorBiblia.PASTA_INDEX));
+		Directory index = new SimpleFSDirectory(new File(Indexador.PASTA_INDEX));
 		
 		BrazilianAnalyzer analyzer = new BrazilianAnalyzer(Version.LUCENE_36, BrazilianAnalyzer.getDefaultStopSet());
 		Query q = new QueryParser(Version.LUCENE_36, "",  analyzer).parse(Parser.parseParams("gen 1 12-14", Versao.ACF));

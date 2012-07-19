@@ -13,10 +13,8 @@ import org.apache.lucene.util.Version;
 import santes.toni.bibliasearch.BibliaResults;
 import santes.toni.bibliasearch.BibliaSearcher;
 import santes.toni.bibliasearch.BibliaSearcherException;
-import santes.toni.bibliasearch.BibliaSearcherFactory;
 import santes.toni.bibliasearch.Livro;
 import santes.toni.bibliasearch.Versao;
-import santes.toni.bibliasearch.Versiculo;
 
 public class BibliaSearcherLucene implements BibliaSearcher {
 
@@ -26,7 +24,7 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 
 	public BibliaSearcherLucene() {
 		try {
-			index = new SimpleFSDirectory(new File(IndexadorBiblia.PASTA_INDEX));
+			index = new SimpleFSDirectory(new File(Indexador.PASTA_INDEX));
 		} catch (IOException e) {
 			// FIXME Log
 			throw new BibliaSearcherException(e);

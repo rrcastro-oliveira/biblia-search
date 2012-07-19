@@ -35,11 +35,11 @@ class BibliaResultsLucene implements BibliaResults {
     	int docId = hits[count++].doc;
 	    try {
 			Document d = searcher.doc(docId);
-			int livro = Integer.parseInt(d.get(IndexadorBiblia.LIVRO));
-			int cap = Integer.parseInt(d.get(IndexadorBiblia.CAP));
-			int nver = Integer.parseInt(d.get(IndexadorBiblia.NVER));
-			String versao = d.get(IndexadorBiblia.VERSAO);
-			String content = d.get(IndexadorBiblia.CONTENT);
+			int livro = Integer.parseInt(d.get(Indexador.LIVRO));
+			int cap = Integer.parseInt(d.get(Indexador.CAP));
+			int nver = Integer.parseInt(d.get(Indexador.NVER));
+			String versao = d.get(Indexador.VERSAO);
+			String content = d.get(Indexador.CONTENT);
 			
 			Versiculo versiculo = new Versiculo();
 			versiculo.setLivro(livro);
