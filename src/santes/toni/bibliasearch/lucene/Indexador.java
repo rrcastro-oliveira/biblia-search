@@ -2,8 +2,8 @@ package santes.toni.bibliasearch.lucene;
 
 import java.io.IOException;
 
-public class Indexador {
-	public static final String PASTA_INDEX = ".bibliaindex";
+class Indexador {
+	public static final String PASTA_INDEX = "bibliaindex";
 	
 	public static final String CONTENT = "content";
 	public static final String NVER = "nver";
@@ -14,5 +14,6 @@ public class Indexador {
 	public static void main(String[] args) throws IOException {
 		IndexadorACF.indexar();
 		IndexadorARA.indexar();
+		IndexadorARC.indexar();
 	}
 }

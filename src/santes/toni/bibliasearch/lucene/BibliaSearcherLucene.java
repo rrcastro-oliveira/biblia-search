@@ -23,9 +23,9 @@ public class BibliaSearcherLucene implements BibliaSearcher {
 	private BrazilianAnalyzer analyzer;
 	private Directory index;
 
-	public BibliaSearcherLucene() {
+	public BibliaSearcherLucene(File fileIndex) {
 		try {
-			index = new SimpleFSDirectory(new File(Indexador.PASTA_INDEX));
+			index = new SimpleFSDirectory(fileIndex);
 		} catch (IOException e) {
 			// FIXME Log
 			throw new BibliaSearcherException(e);

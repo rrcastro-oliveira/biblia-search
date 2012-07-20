@@ -3,7 +3,8 @@ package santes.toni.bibliasearch;
 public enum Versao {
 	
 	ACF("acf"),
-	ARA("ara");
+	ARA("ara"),
+	ARC("arc");
 	
 	private final String srt;
 

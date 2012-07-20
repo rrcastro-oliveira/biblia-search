@@ -15,7 +15,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
 
-class IndexadorARA {
+class IndexadorARC {
 	
 	enum Livro {
 		GENESIS(1, new int[]{31,25,24,26,32,22,24,22,29,32,32,20,18,24,21,16,27,33,38,18,34,24,20,67,34,35,46,22,35,43,55,32,20,31,29,43,36,30,23,23,57,38,34,34,28,34,31,22,33,26}),
@@ -24,7 +24,7 @@ class IndexadorARA {
 		NUMEROS(4, new int[]{54,34,51,49,31,27,89,26,23,36,35,16,33,45,41,50,13,32,22,29,35,41,30,25,18,65,23,31,40,16,54,42,56,29,34,13}),
 		DEUTERONOMIO(5, new int[]{46,37,29,49,33,25,26,20,29,22,32,32,18,29,23,22,20,22,21,20,23,30,25,22,19,19,26,68,29,20,30,52,29,12}),
 		JOSUE(6, new int[]{18,24,17,24,15,27,26,35,27,43,23,24,33,15,63,10,18,28,51,9,45,34,16,33}),
-		JUIZES(7, new int[]{36,23,31,24,31,40,25,35,57,18,40,15,25,20,20,31,13,31,30,48,25}),
+		JUIZES(7, new int[]{36,23,31,24,32,40,25,35,57,18,40,15,25,20,20,31,13,31,30,48,25}),
 		RUTE(8, new int[]{22,23,18,22}),
 		I_SAMUEL(9, new int[]{28,36,21,22,12,21,17,22,27,27,15,25,23,52,35,23,58,30,24,43,15,23,29,22,44,25,12,25,11,31,13}),
 		II_SAMUEL(10, new int[]{27,32,39,12,25,23,29,18,13,19,27,31,39,33,37,23,29,33,43,26,22,51,39,25}),
@@ -115,7 +115,7 @@ class IndexadorARA {
 	    IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
 
 	    IndexWriter w = new IndexWriter(index, config);
-	    File file = new File("versoes/ara");
+	    File file = new File("versoes/arc");
 	    
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		System.out.println("indexando " + file.getName() + "...");
