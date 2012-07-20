@@ -3,7 +3,7 @@ package santes.toni.bibliasearch;
 public enum Versao {
 	
 	ACF("acf"),
-	GRE("gre");
+	ARA("ara");
 	
 	private final String srt;
 

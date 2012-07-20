@@ -16,17 +16,4 @@ public class BibliaSearcherFactory {
 		
 		return instance;	
 	}
-	
-	public static void main(String[] args) {
-		long l1 = System.currentTimeMillis();
-		BibliaResults results = BibliaSearcherFactory.get().getLivro(Livro.GENESIS);
-		Versiculo v = results.next();
-		while (v != null) {
-			System.out.println(v.getTexto());
-			v = results.next();
-		}
-		results.close();
-			
-		System.out.println("levou: " + (System.currentTimeMillis()-l1));
-	}
 }
